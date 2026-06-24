@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>I'm Sorry, Baby 💔</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Comic Sans MS', 'Segoe UI', cursive; }
+  body {
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+    background-size: 400% 400%;
+    animation: gradientShift 12s ease infinite;
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #4a154b;
+    padding: 30px 15px;
+    text-align: center;
+  }
+  @keyframes gradientShift {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+  }
+
+  h1 {
+    font-size: 3.2rem;
+    margin: 20px 0;
+    text-shadow: 2px 2px 0 #fff, 4px 4px 0 rgba(0,0,0,0.1);
+    animation: wobble 2s ease-in-out infinite;
+  }
+  @keyframes wobble {
+    0%,100% { transform: rotate(-2deg);}
+    50% { transform: rotate(2deg);}
+  }
+
+  .hearts {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .heart {
+    position: absolute;
+    font-size: 28px;
+    animation: floatUp linear infinite;
+    opacity: 0.8;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%{ opacity: 1; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  .card {
+    background: rgba(255,255,255,0.85);
+    max-width: 720px;
+    margin: 25px auto;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(8px);
+  }
+  .card h2 { color:#d6336c; margin-bottom:15px; font-size:1.8rem; }
+  .card p { font-size: 1.1rem; line-height: 1.7; margin: 10px 0; text-align: left; }
+  .card p.center { text-align: center; }
+
+  .tickle-box {
+    background: #fff0f6;
+    padding: 25px;
+    border-radius: 15px;
+    border: 3px dashed #ff6b9d;
+    margin: 15px 0;
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .note-box {
+    background: linear-gradient(135deg, #fff9db, #ffe066);
+    padding: 18px 22px;
+    border-radius: 15px;
+    border: 3px solid #fab005;
+    margin: 18px 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #5c3d00;
+    box-shadow: 0 4px 15px rgba(250,176,5,0.25);
+    animation: pulseGlow 2.5s ease-in-out infinite;
+  }
+  @keyframes pulseGlow {
+    0%,100% { box-shadow: 0 4px 15px rgba(250,176,5,0.25); }
+    50% { box-shadow: 0 4px 25px rgba(250,176,5,0.55); }
+  }
+
+  .timer-display {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #d6336c;
+    margin: 20px 0;
+    text-shadow: 3px 3px 0 #fff;
+    font-family: 'Courier New', monospace;
+  }
+  .start-tickle-btn {
+    background: linear-gradient(135deg, #ff6b9d, #d6336c);
+    color: white;
+    padding: 16px 35px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 5px 20px rgba(214,51,108,0.4);
+    font-family: inherit;
+    transition: transform 0.2s;
+  }
+  .start-tickle-btn:hover { transform: scale(1.08); }
+  .start-tickle-btn:disabled { cursor: not-allowed; }
+
+  .buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    position: relative;
+    min-height: 60px;
+  }
+  button {
+    padding: 14px 28px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: inherit;
+  }
+  .yes-btn {
+    background: #51cf66;
+    color: white;
+    box-shadow: 0 5px 15px rgba(81,207,102,0.4);
+  }
+  .yes-btn:hover { transform: scale(1.15); }
+  .no-btn {
+    background: #ff6b6b;
+    color: white;
+    position: absolute;
+    transition: all 0.3s;
+  }
+
+  .signature {
+    font-style: italic;
+    font-size: 1.3rem;
+    color: #d6336c;
+    margin-top: 20px;
+    text-align: center !important;
+  }
+
+  .hidden-msg {
+    display: none;
+    background: linear-gradient(135deg, #51cf66, #94d82d);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    font-size: 1.4rem;
+    animation: popIn 0.6s ease;
+  }
+  @keyframes popIn {
+    0% { transform: scale(0); }
+    70% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  .puppy {
+    font-size: 5rem;
+    display: inline-block;
+    animation: shake 1.5s ease-in-out infinite;
+    text-align: center;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0) rotate(0); }
+    25% { transform: translateX(-5px) rotate(-5deg); }
+    75% { transform: translateX(5px) rotate(5deg); }
+  }
+
+  .letter-text {
+    background: #fffaf0;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 5px solid #ff6b9d;
+    font-size: 1.08rem;
+    line-height: 1.8;
+  }
+</style>
+</head>
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<h1>💔 I'm So Sorry, Baby 💔</h1>
+
+<div class="card">
+  <div class="puppy">🥺🐶</div>
+  <h2 style="text-align:center;">An Apology Letter For You 💌</h2>
+  <div class="letter-text">
+    <p><strong>Dear Baby ko,</strong></p>
+    <p>Im really really sorry. Sobrang tanga ko talaga babe tangina hindi dapat kita ginaganon and given na 'yon pero dahil bobo ako kaya ganon. 😞</p>
+    <p>Pasensya ka na babe, hinding hindi ko na 'yon uulitin talaga. Ayokong mawala ka sa buhay ko, and I reflected on what I've done to you — everything that I've done. 💭</p>
+    <p>Sobrang sorry talaga babe huhuhu. 😭 I miss you so much and I love you forever, baby ko. 💖</p>
+    <p>Sana mapatawad mo pa ako huhuhu. Labyu baby mwaaa. 😘</p>
+    <p style="text-align:right;"><em>— Torsqt 💕</em></p>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🤭 Pero pwede ba babe...</h2>
+  <div class="tickle-box">
+    <p class="center" style="text-align:center;">I will give you <strong>30 seconds max</strong> na kilitiin ako babe huhu 🥺👉👈</p>
+    <p class="center" style="text-align:center; font-size:1.4rem; color:#d6336c;"><strong>Sana pumayag ka huhu 😭💕</strong></p>
+  </div>
+
+  <div class="note-box">
+    📌 <strong>Note babe:</strong> The timer will only start <strong>when we meet</strong> 🥺💕<br>
+    <span style="font-size:0.95rem;">(So please pretend not to see the button below for now hehe 😅 — kapag magkasama na tayo, doon mo i-click. Promise sulit naman, 30 seconds lang! 🤭)</span>
+  </div>
+
+  <div class="timer-display" id="timer">00:30</div>
+  <button class="start-tickle-btn" id="tickleBtn" onclick="startTickle()">Pag magkasama na tayo, i-click mo 'to babe 🥺💕</button>
+  <p class="center" id="tickleMsg" style="text-align:center; margin-top:15px; font-size:1.1rem;"></p>
+</div>
+
+<div class="card">
+  <h2>❓ Patatawarin mo na ba ako babe?</h2>
+  <div class="buttons" id="btnArea">
+    <button class="yes-btn" onclick="forgive()">Oo babe 💖</button>
+    <button class="no-btn" id="noBtn" onmouseover="runAway()" ontouchstart="runAway()">Hindi 😤</button>
+  </div>
+  <div id="forgiveMsg" class="hidden-msg">
+    🎉 SALAMAT BABE! Mahal na mahal kita, I promise I'll be better for you. 💕✨ Labyu forever! 😘
+  </div>
+</div>
+
+<div class="card">
+  <p class="signature">Forever yours (and sobrang sorry),<br>Torsqt 💌</p>
+</div>
+
+<script>
+  // Floating hearts
+  const heartsContainer = document.getElementById('hearts');
+  const emojis = ['❤️','💕','💖','💗','💘','💝','🌸','✨'];
+  for (let i = 0; i < 25; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    h.style.left = Math.random()*100 + 'vw';
+    h.style.animationDuration = (Math.random()*8 + 5) + 's';
+    h.style.animationDelay = (Math.random()*5) + 's';
+    h.style.fontSize = (Math.random()*20 + 18) + 'px';
+    heartsContainer.appendChild(h);
+  }
+
+  // Tickle countdown timer
+  let tickleRunning = false;
+  function startTickle() {
+    if (tickleRunning) return;
+    tickleRunning = true;
+    const btn = document.getElementById('tickleBtn');
+    const timerEl = document.getElementById('timer');
+    const msgEl = document.getElementById('tickleMsg');
+    btn.disabled = true;
+    btn.textContent = '🤣 Kinikiliti na! 🤣';
+    btn.style.opacity = 0.7;
+
+    let seconds = 30;
+    const reactions = [
+      '😆 HAHAHA babe stop!',
+      '🤣 Babe sobrang kiliti!',
+      '😂 Hala wait wait!',
+      '🥹 Babeee tama na!',
+      '😝 Patay na ako sa kakatawa!',
+      '🤪 Kilig pa rin pero kiliti!',
+      '😅 Babe ang galing mo!',
+      '🥰 Mahal kita kahit kinikiliti mo ako!'
+    ];
+    msgEl.textContent = reactions[0];
+
+    const interval = setInterval(() => {
+      seconds--;
+      timerEl.textContent = '00:' + String(seconds).padStart(2,'0');
+      if (seconds % 4 === 0) {
+        msgEl.textContent = reactions[Math.floor(Math.random()*reactions.length)];
+      }
+      if (seconds <= 5) {
+        timerEl.style.color = '#ff0000';
+        timerEl.style.animation = 'shake 0.3s ease-in-out infinite';
+      }
+      if (seconds <= 0) {
+        clearInterval(interval);
+        timerEl.textContent = '00:00';
+        msgEl.innerHTML = '😮‍💨 Phew tapos na! Salamat babe, sulit ang 30 seconds! 💕<br>Patawarin mo na ako pleeease 🥺';
+        btn.textContent = '✅ Tapos na ang kiliti!';
+      }
+    }, 1000);
+  }
+
+  // Runaway No button
+  function runAway() {
+    const btn = document.getElementById('noBtn');
+    const area = document.getElementById('btnArea');
+    const maxX = area.offsetWidth - btn.offsetWidth - 10;
+    const maxY = 50;
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY - 25;
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
+    const sassyMessages = ['Wag naman babe!','Di mo ako mahuhuli!','Try again!','Hehe 😜','Sablay!','Bilisan mo babe!'];
+    btn.textContent = sassyMessages[Math.floor(Math.random()*sassyMessages.length)] + ' 😤';
+  }
+
+  // Forgive action
+  function forgive() {
+    document.getElementById('btnArea').style.display = 'none';
+    document.getElementById('forgiveMsg').style.display = 'block';
+    // Confetti burst
+    for (let i = 0; i < 60; i++) {
+      const c = document.createElement('div');
+      c.textContent = ['🎉','💖','✨','🌟','💕','😘'][Math.floor(Math.random()*6)];
+      c.style.position = 'fixed';
+      c.style.left = Math.random()*100 + 'vw';
+      c.style.top = '-30px';
+      c.style.fontSize = '30px';
+      c.style.zIndex = 999;
+      c.style.transition = 'top 3s linear, transform 3s linear';
+      document.body.appendChild(c);
+      setTimeout(() => {
+        c.style.top = '110vh';
+        c.style.transform = 'rotate(' + (Math.random()*720) + 'deg)';
+      }, 50);
+      setTimeout(() => c.remove(), 3500);
+    }
+  }
+</script>
+
+</body>
+</html>
